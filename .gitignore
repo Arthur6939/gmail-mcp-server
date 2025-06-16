@@ -1,0 +1,7 @@
+# Ignore Gmail credentials
+/src/main/resources/credentials.json
+# Ignore target directory
+/target/
+/tokens
+/.idea
+gmail-mcp-server.log

@@ -1,0 +1,43 @@
+gmail:
+  credentials:
+    path: credentials.json
+  local:
+    port: 8889
+  token:
+    path: "/Users/arthur/projects/gmail-mcp-server/tokens"
+    
+spring:
+  main:
+    web-application-type: none  # 必须禁用web应用类型
+    banner-mode: off           # 禁用banner
+  application:
+    name: gmail-mcp-server
+  ai:
+    mcp:
+      server:
+        stdio: true            # 启用stdio模式  
+        name: ${spring.application.name}
+        version: 0.0.1
+        startup-timeout: 60000  # MCP服务器启动超时时间(毫秒)
+
+server:
+  port: 8888
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+
+debug: false
+
+# logging:
+#   level:
+#     root: debug
+#     org.springframework.web: debug
+#     org.springframework.security: debug
+#   pattern:
+#     console:
+#   file:
+#     name: ${spring.application.name}.log
+
+
