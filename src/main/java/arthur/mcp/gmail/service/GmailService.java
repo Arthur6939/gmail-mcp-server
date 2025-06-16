@@ -17,9 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -28,7 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -125,10 +123,9 @@ public class GmailService {
             @ToolParam(description = "要删除的邮件ID列表，用逗号分隔") String messageIds) {
         try {
             String[] ids = messageIds.split(",");
-            com.google.api.services.gmail.model.BatchModifyMessagesRequest request = new com.google.api.services.gmail.model.BatchModifyMessagesRequest();
+            com.google.api.services.gmail.model.BatchDeleteMessagesRequest request = new com.google.api.services.gmail.model.BatchDeleteMessagesRequest();
             request.setIds(java.util.Arrays.asList(ids));
-            request.setAddLabelIds(java.util.Collections.singletonList("TRASH"));
-            gmailService.users().messages().batchModify(userId, request).execute();
+            gmailService.users().messages().batchDelete(userId, request).execute();
             return "批量删除成功，共删除 " + ids.length + " 封邮件";
         } catch (IOException e) {
             return "批量删除失败: " + e.getMessage();
@@ -149,11 +146,13 @@ public class GmailService {
             com.google.api.services.gmail.model.ListMessagesResponse response = request.setMaxResults((long) maxResults).execute();
             StringBuilder result = new StringBuilder();
             result.append("找到 ").append(response.getMessages() != null ? response.getMessages().size() : 0).append(" 封邮件:\n");
+            List<String> msgIDs = new ArrayList<>();
             if (response.getMessages() != null) {
                 for (com.google.api.services.gmail.model.Message message : response.getMessages()) {
-                    result.append("邮件ID: ").append(message.getId()).append("\n");
+                    msgIDs.add(message.getId());
                 }
             }
+            result.append("msgIDs:").append(String.join(", ", msgIDs));
             return result.toString();
         } catch (IOException e) {
             return "查询邮件失败: " + e.getMessage();
