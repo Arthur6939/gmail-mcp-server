@@ -48,6 +48,7 @@
   - 参数: userId(用户邮箱), messageIds(邮件ID列表)
   - 返回值: 操作结果状态
 ## MCP server 配置
+```json
 {
   "mcpServers": {
     "gmail-mcp-server": {
@@ -62,3 +63,7 @@
     }
   }
 }
+```
+
+
+
