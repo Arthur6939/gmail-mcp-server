@@ -5,6 +5,8 @@
 ## 功能
 - 通过MCP协议暴露Gmail邮件删除工具
 - 支持通过邮件ID删除指定用户的邮件
+- 提供邮件搜索功能，支持按条件查询邮件
+- 支持批量删除指定用户的多个邮件
 
 ## 环境要求
 - Java 17或更高版本
@@ -39,3 +41,9 @@
 通过MCP客户端连接服务器后，可调用以下工具：
 - `deleteEmail`: 删除指定ID的邮件
   - 参数: userId(用户邮箱), messageId(邮件ID)
+- `searchEmails`: 搜索符合条件的邮件
+  - 参数: userId(用户邮箱), query(搜索条件), maxResults(最大结果数)
+  - 返回值: 邮件列表，包含邮件ID和基本信息
+- `batchDeleteEmails`: 批量删除邮件
+  - 参数: userId(用户邮箱), messageIds(邮件ID列表)
+  - 返回值: 操作结果状态
