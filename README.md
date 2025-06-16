@@ -47,3 +47,18 @@
 - `batchDeleteEmails`: 批量删除邮件
   - 参数: userId(用户邮箱), messageIds(邮件ID列表)
   - 返回值: 操作结果状态
+## MCP server 配置
+{
+  "mcpServers": {
+    "gmail-mcp-server": {
+    "command": "java",
+    "args": [
+      "-Dspring.ai.mcp.server.stdio=true",
+      "-Dspring.main.web-application-type=none",
+      "-Dlogging.pattern.console=",
+      "-jar",
+      "/Users/arthur/.m2/repository/arthur/mcp/gmail-mcp-server/0.0.1-SNAPSHOT/gmail-mcp-server-0.0.1-SNAPSHOT.jar"
+    ]
+    }
+  }
+}
